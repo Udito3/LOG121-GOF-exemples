@@ -2,27 +2,73 @@
 skinparam style strictuml
 interface Container <<Interface>> {
   getIterator(): Iterator
+  Iterator getIteratorReverse();
+  setComparateur(Comparator<String> comparateur) : void
+  sort() : void
 }
 interface Iterator <<Interface>> {
   hasNext(): boolen
+  hasPrevious(): boolen
   next(): Object
+  previous(): Object
+}
+class ComparatorNom{
+  compare(String nom1, String nom2): int
+}
+class Observateur{
+  nom: String
+  state: String
+  subject: ISubject
+  update(Object arg): void
+  update(): void
+  getMessage(): String
+}
+interface ISubject{
+  getState() : String
+  setState(String state) : void
+  notifyObservers(Object arg) : void
+  notifyObservers() : void
+  addObserver(Observateur observateur) : void
+}
+class Subject{
+  state : String
+  observateurs : List<Observateur>
 }
 class NameRepository{
   name: String[]
+  comparateur : Comparator<String>
   getIterator(): Iterator
+  getIteratorReverse() : Iterator
+  setComparateur(Comparator<String> comparateur) : void
+  sort() : void
 }
 class NameIterator{
   hasNext(): boolean
   next(): Object
+  hasPrevious(): boolean
+  previous(): Object
+  addObservateur() : void
 }
 class NameRepositoryTest{
+  testGetIterator() : void
+  testOrdreAlphabetique() : void
+  testOrdreAlphabetiqueInverse() : void
+  testObservateurNext() : void
+  testObservateurPrevious() : void
 }
-class NameRepository implements Container 
-class NameIterator implements Iterator  
+class NameRepository implements Container
+class NameIterator implements Iterator
 
 NameRepository .left-> NameIterator : depend on
+NameRepository -right-> ComparatorNom : uses
 NameRepository <-left- NameIterator : internal
 NameRepositoryTest -left-> Iterator : uses
+Iterator --> ISubject : extends
+NameIterator --|> Subject : hérite
+ISubject --> IObservateur : uses
+Observateur --|> IObservateur : implemente
+Observateur --> ISubject : uses
+Subject --|> ISubject : hérite
 Container <-left- NameRepositoryTest : uses
 @enduml
 
@@ -34,7 +80,7 @@ title Diagramme de séquence
 actor main
 participant "namesRepository:NameRepository" as namesRepository
 participant "names: String" as names
-participant "name:String" as name 
+participant "name:String" as name
 participant "iter:NameIterator" as iter
 
 main -> namesRepository ** : namesRepository = new NameRepository()
