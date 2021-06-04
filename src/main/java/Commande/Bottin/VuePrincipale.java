@@ -1,26 +1,12 @@
 package Commande.Bottin;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
@@ -32,7 +18,7 @@ import java.awt.event.KeyEvent;
 public class VuePrincipale extends JFrame implements ListSelectionListener, ListDataListener {
 	public final static int N_CAR = 20;	// nombre de caracteres pour les TextFields
 	public final static int N_ITEM = 5;	// nombre d'items affichés dans la liste
-	
+
 	private Bottin bottin;
 	private JPanel contentPane;
 	private JTextField txtNom;
@@ -41,10 +27,10 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 	private JList<Fiche> liste;
 	private Action voirAction;
 	private Action ajouterAction;
-	private Action editerAction; 
+	private Action editerAction;
 	private Action detruireAction;
 	private Action fermerAction;
-	private Action defaireAction; 
+	private Action defaireAction;
 	private Action refaireAction;
 
 	/**
@@ -54,10 +40,10 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 	public VuePrincipale(Bottin bottin) {
 		super("Bottin");
 		this.bottin = bottin;
-		
+
 		/*
 		 *  Creer les "Action"
-		 * 
+		 *
 		 */
 		voirAction     = new FicheActionVoir    (bottin, this, "Voir",     null, "Voir une fiche", new Integer(KeyEvent.VK_V));
 		ajouterAction  = new FicheActionAjouter (bottin, this, "Ajouter",  null, "Ajouter une fiche", new Integer(KeyEvent.VK_A));
@@ -80,7 +66,7 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
         JMenuItem fermerItem    = new JMenuItem(fermerAction);
         JMenuItem defaireItem   = new JMenuItem(defaireAction);
         JMenuItem refaireItem   = new JMenuItem(refaireAction);
-        
+
         fichierMenu.add(fermerItem);
         editerMenu.add(defaireItem);
         editerMenu.add(refaireItem);
@@ -97,27 +83,27 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
          */
 		JPanel panelInfos = new JPanel();
 		panelInfos.setLayout(new GridLayout(3, 2, 0, 0));
-		
+
 		JLabel lblNom = new JLabel("Nom");
 		lblNom.setHorizontalAlignment(SwingConstants.LEFT);
 		panelInfos.add(lblNom);
-		
+
 		txtNom = new JTextField();
 		panelInfos.add(txtNom);
 		txtNom.setColumns(N_CAR);
 		txtNom.setEditable(false);
-		
+
 		JLabel lblPrenom = new JLabel("Prenom");
 		panelInfos.add(lblPrenom);
-		
+
 		txtPrenom = new JTextField();
 		panelInfos.add(txtPrenom);
 		txtPrenom.setColumns(N_CAR);
 		txtPrenom.setEditable(false);
-		
+
 		JLabel lblNumero = new JLabel("Numero");
 		panelInfos.add(lblNumero);
-		
+
 		txtNumero = new JTextField();
 		panelInfos.add(txtNumero);
 		txtNumero.setColumns(N_CAR);
@@ -136,22 +122,22 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 
         // Fournir la strategie d'affichage d'une fiche a la liste
 		liste.setCellRenderer(new FicheCelRenderer());
-		
+
 		// Ajouter cette vue comme listener lors d'une changement de sélection de la liste.
-		// Ceci permet de mettre à jour les champs de la vue (nom, prenom et numero) 
+		// Ceci permet de mettre à jour les champs de la vue (nom, prenom et numero)
 		// et ajuster l'état des boutons lorsque la sélection de la liste est modifiée
 		liste.addListSelectionListener(this);
-		
+
 		// Ajouter cette vue comme listener lors d'un changement à un item de la liste.
 		// Ceci permet de mettre à jour les champs de la vue (nom, prenom et numéro) lorsqu'un
 		// item de la fiche est modifiée (bouton Éditer).
 		bottin.addListDataListener(this);
-		
+
 		/*
 		 * Créer les boutons et associer les actions
 		 */
 		JPanel panelBoutons = new JPanel();
-				
+
 		JButton btnVoir = new JButton(voirAction);
 		JButton btnAjouter = new JButton(ajouterAction);
 		JButton btnEditer = new JButton(editerAction);
@@ -159,10 +145,10 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		JButton btnFermer = new JButton(fermerAction);
 
 		panelBoutons.add(btnVoir);
-		panelBoutons.add(btnAjouter);		
+		panelBoutons.add(btnAjouter);
 		panelBoutons.add(btnEditer);
 		panelBoutons.add(btnDetruire);
-		panelBoutons.add(btnFermer);				
+		panelBoutons.add(btnFermer);
 
 		/*
 		 *  Créer la JPanel principal
@@ -170,7 +156,7 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		contentPane.add(panelInfos, BorderLayout.NORTH);
         contentPane.add(listScrollPane, BorderLayout.CENTER);
 		contentPane.add(panelBoutons, BorderLayout.SOUTH);
@@ -180,7 +166,7 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		 */
 		setTextFields(new Fiche());
 		ficheSelectionne(false);
-		
+
 		/*
 		 * Ajuster et affichier la vue (JFrame)
 		 */
@@ -189,9 +175,9 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		setJMenuBar(menuBar);
 		add(contentPane);
 		setLocationRelativeTo(null);
-		setVisible(true);		
+		setVisible(true);
 	}
-	
+
 	/**
 	 * Activer ou déactiver les actions Voir, Editer et Detruire
 	 * @param active - boolean, si true, les actions sont activees
@@ -201,7 +187,7 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		editerAction.setEnabled(active);
 		detruireAction.setEnabled(active);
 	}
-		
+
 	/**
 	 * Mettre à jour les chamops Nom, Prénom et Numero de la vue à partir d'une fiche
 	 * @param fiche - fiche utilisée pour mettre à jour les champs
@@ -211,7 +197,7 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		txtPrenom.setText(fiche.getPrenom());
 		txtNumero.setText(fiche.getNumero());
 	}
-	
+
 	/**
 	 * Retourne l'index de la ligne selectionnee du JList
 	 * @return index de la ligne selectionnee
@@ -219,8 +205,8 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 	public int getIndex() {
 		return liste.getSelectedIndex();
 	}
-	
-	
+
+
 	/**
 	 * Mettre à jour index et afficher les champs nom, prénom et numéro en conséquence
 	 */
@@ -235,7 +221,7 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 	    	else {
 	    		ficheSelectionne(false);
 	    		setTextFields(new Fiche());
-	    	}		
+	    	}
 	    }
 	}
 

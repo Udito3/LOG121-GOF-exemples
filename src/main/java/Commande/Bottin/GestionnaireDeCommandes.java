@@ -12,63 +12,67 @@ import java.util.Observable;
 public class GestionnaireDeCommandes extends Observable {
 	private boolean defaireStatut;
 	private boolean refaireStatut;
-	
+
     private LinkedList<Commande> histoire = new LinkedList<Commande>();
     private LinkedList<Commande> aRefaire = new LinkedList<Commande>();
-	
+
     public boolean peutDefaire() {
     	return histoire.size() > 0;
     }
-    
+
     public boolean peutRefaire() {
     	return aRefaire.size() > 0;
     }
-    
+
 	public void faireCommande(Commande commande) {
-		defaireStatut = peutDefaire();
-		refaireStatut = peutRefaire();
-		
-        if (commande instanceof Defaire) {
-            defaire();
-        } 
-        else if (commande instanceof Refaire) {
-            refaire();
-        }
-        else {
-        	if (commande.faire()) {
-        		histoire.addFirst(commande);
-        	} 
-        	else {
-        		histoire.clear();
-        	} 
-        	aRefaire.clear();
-        }
-        
-        if (defaireStatut ^ peutDefaire() || refaireStatut ^ peutRefaire()) {
+        statusInitialHistoire();
+
+		commande.faire();
+
+        if (histoireAChanger()) {
         	setChanged();
         	notifyObservers();
         }
 	}
-	
-	/*
-     * Defaire la commande la plus récente
-     */
-    private void defaire() {
-        if (histoire.size() > 0) { 
-        	Commande commandeADefaire = histoire.removeFirst();
-        	commandeADefaire.defaire();
-            aRefaire.addFirst(commandeADefaire);
-        } 
+
+	private void statusInitialHistoire() {
+        defaireStatut = peutDefaire();
+        refaireStatut = peutRefaire();
     }
 
-    /*
-     * Refaire la dernire commande qui a été "defaite"
-     */
-    private void refaire() {
-        if (aRefaire.size() > 0) { 
-            Commande commandeARefaire = aRefaire.removeFirst();
-            commandeARefaire.refaire();
-            histoire.addFirst(commandeARefaire);
-        } 
-    } 	
+	private boolean histoireAChanger() {
+        return defaireStatut ^ peutDefaire() || refaireStatut ^ peutRefaire();
+    }
+
+	public void clearARefaire() {
+        aRefaire.clear();
+    }
+
+    public int getHistoireSize() {
+        return histoire.size();
+    }
+
+    public int getARefaireSize() {
+        return aRefaire.size();
+    }
+
+    public Commande removeHistoireFirst() {
+        return histoire.removeFirst();
+    }
+
+    public Commande removeARefaireFirst() {
+        return aRefaire.removeFirst();
+    }
+
+    public void addFirstARefaire(Commande commandeADefaire) {
+        aRefaire.addFirst(commandeADefaire);
+    }
+
+    public void addFirstHistoire(Commande commandeARefaire) {
+        histoire.addFirst(commandeARefaire);
+    }
+
+    public void clearHistoire() {
+        histoire.clear();
+    }
 }

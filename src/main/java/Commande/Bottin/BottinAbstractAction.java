@@ -3,8 +3,7 @@ package Commande.Bottin;
 // // import java.util.Observable;
 // import java.util.Observer;
 
-import javax.swing.AbstractAction;
-import javax.swing.Icon;
+import javax.swing.*;
 
 // @SuppressWarnings({"deprecation"})
 public abstract class BottinAbstractAction extends AbstractAction {
@@ -14,8 +13,8 @@ public abstract class BottinAbstractAction extends AbstractAction {
 	protected Bottin bottin;
     protected VuePrincipale vue;
 
-	public BottinAbstractAction(Bottin bottin, 
-			VuePrincipale vue, String texte, Icon icon, 
+	public BottinAbstractAction(Bottin bottin,
+			VuePrincipale vue, String texte, Icon icon,
 			String description, Integer mnemonic) {
 		super(texte, icon);
 		putValue(SHORT_DESCRIPTION, description);

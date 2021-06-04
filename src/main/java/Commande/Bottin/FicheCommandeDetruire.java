@@ -1,23 +1,25 @@
 package Commande.Bottin;
 
-public class FicheCommandeDetruire implements Commande {
+public class FicheCommandeDetruire extends ACommande {
 
 	private int index;
 	private Fiche ficheOriginale = null;
 	private Bottin bottin;
-	
-	public FicheCommandeDetruire(Bottin bottin, int index) {
+
+	public FicheCommandeDetruire(Bottin bottin, int index, GestionnaireDeCommandes gdc) {
+	    super(gdc);
 		this.bottin = bottin;
 		this.index = index;
 	}
 
-	public boolean faire() {
+	public void faire() {
+        gdc.clearARefaire();
 		ficheOriginale = new Fiche(bottin.get(index));
 		bottin.remove(index);
-		return true;
+		gdc.addFirstHistoire(this);
 	}
 
-	public void defaire() { 
+	public void defaire() {
 		bottin.insertElementAt(ficheOriginale, index);
 	}
 

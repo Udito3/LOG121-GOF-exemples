@@ -1,27 +1,28 @@
 package Commande.Bottin;
 
+import javax.swing.*;
 import java.io.IOException;
 
-import javax.swing.JOptionPane;
-
-public class FicheCommandeFermer implements Commande {
+public class FicheCommandeFermer extends ACommande {
 
 	private Bottin bottin;
-	
-	public FicheCommandeFermer(Bottin bottin) {
+
+	public FicheCommandeFermer(Bottin bottin, GestionnaireDeCommandes gdc) {
+	    super(gdc);
 		this.bottin = bottin;
 	}
 
-	public boolean faire() {
+	public void faire() {
+        gdc.clearARefaire();
 		try {
 			bottin.ecrire();
 		} catch (IOException e) {
-    		JOptionPane.showMessageDialog(null, 
+    		JOptionPane.showMessageDialog(null,
 	    			"Erreur", "Erreur à l'écriture du bottin", JOptionPane.ERROR_MESSAGE, null);
 		} finally {
 			System.exit(0);
 		}
-		return false;
+		gdc.clearHistoire();
 	}
 
 	public void defaire() {	}

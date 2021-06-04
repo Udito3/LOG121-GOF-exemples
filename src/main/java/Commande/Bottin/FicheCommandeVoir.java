@@ -1,20 +1,20 @@
 package Commande.Bottin;
 
-public class FicheCommandeVoir implements Commande {
-	
+public class FicheCommandeVoir extends ACommande {
+
 	private int index;
 	private Bottin bottin;
-	
-	public FicheCommandeVoir(Bottin bottin, int index) {
+
+	public FicheCommandeVoir(Bottin bottin, int index, GestionnaireDeCommandes gdc) {
+	    super(gdc);
 		this.index = index;
 		this.bottin = bottin;
 	}
 
-	public boolean faire() {
+	public void faire() {
 		Fiche fiche = bottin.get(index);
 		FicheDialog dialog = new FicheDialog(fiche, FicheDialog.Type.VOIR);
 		dialog.setVisible(true);
-		return false;
 	}
 
 	public void defaire() { }

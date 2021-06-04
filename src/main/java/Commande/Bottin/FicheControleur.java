@@ -1,11 +1,10 @@
 package Commande.Bottin;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * FicheControleur - Controleur pour un FicheDialog
@@ -15,13 +14,13 @@ import javax.swing.text.BadLocationException;
 public class FicheControleur implements ActionListener, DocumentListener {
 	Fiche fiche;
 	FicheDialog ficheDialog;
-	
+
 	public FicheControleur(FicheDialog ficheDialog) {
 		this.ficheDialog = ficheDialog;
 	}
 
 	/*
-	 * Méthodes requises pour implémenter DocumentListener 
+	 * Méthodes requises pour implémenter DocumentListener
 	 */
 	public void insertUpdate(DocumentEvent e) {
 		ficheDialog.enableOK(isDocLengthNotZero(e));
@@ -45,10 +44,10 @@ public class FicheControleur implements ActionListener, DocumentListener {
 			ficheDialog.setVisible(false);
 		} else if (commande.equals(FicheDialog.ACTION_CANCEL)) {
 			ficheDialog.setOKPressed(false);
-			ficheDialog.setVisible(false);			
+			ficheDialog.setVisible(false);
 		}
 	}
-	
+
 	/**
 	 * Verifier si le document contient au moins un caractère non-blanc
 	 * @param e
@@ -61,6 +60,6 @@ public class FicheControleur implements ActionListener, DocumentListener {
 		} catch (BadLocationException e1) {
 			e1.printStackTrace();
 		}
-		return r; 
+		return r;
 	}
 }

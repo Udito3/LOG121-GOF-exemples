@@ -1,15 +1,7 @@
 package Commande.Bottin;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.swing.DefaultListModel;
+import javax.swing.*;
+import java.io.*;
 
 /**
  * Bottin - Bottin téléphonique
@@ -21,12 +13,12 @@ public class Bottin extends DefaultListModel<Fiche> {
 	public final static String NOM_FICHIER = "Bottin.txt";
 
 	/**
-	 * Constructeur du bottin 
+	 * Constructeur du bottin
 	 */
 	public Bottin() {
 		super();
 	}
-		            
+
     /**
      * Lire le bottin à partir d'un fichier texte
      * @param fichier - File spécifiant le fichier
@@ -41,7 +33,7 @@ public class Bottin extends DefaultListModel<Fiche> {
 	    		in.close();
 	    	}
     }
-    
+
     /**
      * Écrire le bottin dans un fichier texte
      * @param fichier - File spécifiant le fichier

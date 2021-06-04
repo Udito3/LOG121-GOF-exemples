@@ -1,10 +1,7 @@
 package Commande.Bottin;
 
-import java.awt.Component;
-
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * FicheCelRenderer
@@ -15,10 +12,10 @@ import javax.swing.ListCellRenderer;
  */
 @SuppressWarnings("serial")
 public class FicheCelRenderer extends JLabel implements ListCellRenderer<Fiche> {
-	
+
 	public Component getListCellRendererComponent(JList<? extends Fiche> list, Fiche value, int index,
 			boolean isSelected, boolean cellHasFocus) {
-		
+
 		setText(value.getElementListe());
 		if (isSelected) {
             setBackground(list.getSelectionBackground());
